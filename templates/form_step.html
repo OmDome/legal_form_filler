@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Step {{ step_number }} - {{ form_template.title }}</title>
+</head>
+<body>
+    <h1>{{ form_template.title }}</h1>
+    <h2>Step {{ step_number }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in fields %}
+            <label>{{ field.label }}</label>
+            {% if field.field_type == "checkbox" %}
+                <input type="checkbox" name="{{ field.field_name }}" value="on">
+            {% elif field.field_type == "text" %}
+                <input type="text" name="{{ field.field_name }}" required>
+            {% elif field.field_type == "date" %}
+                <input type="date" name="{{ field.field_name }}" required>
+            {% elif field.field_type == "number" %}
+                <input type="number" name="{{ field.field_name }}" required>
+            {% endif %}
+            <br><br>
+        {% endfor %}
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>
